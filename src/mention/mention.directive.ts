@@ -336,7 +336,9 @@ export class MentionDirective implements OnInit, OnChanges {
             } else {
               this.stopSearch = false;
             }
-            this.searchList.hidden = this.stopSearch;
+            if (this.searchList) {
+              this.searchList.hidden = this.stopSearch;
+            }            
             if (!this.stopSearch) {
               this.searchString = wordFromCaretPosition.substring(0, wordFromCaretPosition.length - 1);
               this.searchTerm.emit(this.searchString);
