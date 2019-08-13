@@ -239,7 +239,7 @@ export class MentionDirective implements OnInit, OnChanges {
     }
     else if (this.startPos >= 0 && !this.stopSearch) {
       if (pos <= this.startPos) {
-        this.searchList.hidden = true;
+        if (this.searchList)  this.searchList.hidden = true;
       }
       // ignore shift when pressed alone, but not when used with another key
       else if (event.keyCode !== KEY_SHIFT &&
@@ -256,9 +256,9 @@ export class MentionDirective implements OnInit, OnChanges {
           if (pos == 0) {
             this.stopSearch = true;
           }
-          this.searchList.hidden = this.stopSearch;
+          if (this.searchList)  this.searchList.hidden = this.stopSearch;
         }
-        else if (!this.searchList.hidden) {
+        else if (this.searchList && !this.searchList.hidden) {
           if (event.keyCode === KEY_TAB || event.keyCode === KEY_ENTER) {
             this.stopEvent(event);
             this.searchList.hidden = true;
@@ -336,16 +336,14 @@ export class MentionDirective implements OnInit, OnChanges {
             } else {
               this.stopSearch = false;
             }
-            if (this.searchList) {
-              this.searchList.hidden = this.stopSearch;
-            }            
+            if (this.searchList)  this.searchList.hidden = this.stopSearch;
             if (!this.stopSearch) {
               this.searchString = wordFromCaretPosition.substring(0, wordFromCaretPosition.length - 1);
               this.searchTerm.emit(this.searchString);
               this.updateSearchList(nativeElement);
             }
           }
-          else if (!this.searchList.hidden) {
+          else if (this.searchList && !this.searchList.hidden) {
             if (event.keyCode === KEY_TAB || event.keyCode === KEY_ENTER) {
               this.stopEvent(event);
               this.searchList.hidden = true;
